@@ -11,37 +11,51 @@ function useForceUpdate(){
 
 function TextSlide({slideData={}, data={}}) {
     const forceUpdate = useForceUpdate();
+    const [width, setWidth] = useState(1);
+    const [height, setHeight] = useState(1);
+    const ref = useRef();
+
+    useEffect(() => {
+        setHeight(ref.current.offsetHeight);
+        setWidth(ref.current.offsetWidth);
+    
+        // 👇️ if you need access to parent
+        // of the element on which you set the ref
+        // console.log(ref.current.parentElement);
+        // console.log(ref.current.parentElement.offsetHeight);
+        // console.log(ref.current.parentElement.offsetWidth);
+    }, []);
 
     let textBoxes = slideData.text_boxes;
     console.log(textBoxes);
 
     let moveData = {};
     for (let key in Object.keys(textBoxes)) {
-        moveData[key] = {moveX: 0, moveY: 0}
+        moveData[key] = {x: 0, y: 0}
     };
 
-    function handleDrag(e, key) {
+    function handleStart(e, key) {
         console.log(moveData);
-        moveData[key].moveX += e.movementX;
-        moveData[key].moveY += e.movementY;
+        moveData[key].x = e.clientX;
+        moveData[key].y = e.clientY;
     }
 
     function handleStop(e, key) {
+        console.log(e);
         let tb = textBoxes[key];
-        tb.x += moveData[key].moveX / 100;
-        tb.y += moveData[key].moveY / 100;
+        tb.x += (e.clientX - moveData[key].x) / width;
+        tb.y += (e.clientY - moveData[key].y) / height;
         console.log(tb.x, tb.y);
-        forceUpdate();
     }
 
-    return [...Object.keys(textBoxes)].map((key) => {
+    let boxRender = [...Object.keys(textBoxes)].map((key) => {
         let box = textBoxes[key];
         return <Draggable
-                onDrag={(e) => {
-                   handleDrag(e, key);
+                onStart={(e) => {
+                   // handleStart(e, key);
                 }}
                 onStop={(e) => {
-                    handleStop(e, key);
+                    // handleStop(e, key);
                 }}>
                 <Typography
                 sx={{
@@ -56,9 +70,7 @@ function TextSlide({slideData={}, data={}}) {
             </Typography>
         </Draggable>;
     })
-    
-    
-    
+    return <div ref={ref}>{boxRender}</div>;
 }
 
 export default TextSlide;

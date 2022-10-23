@@ -2,23 +2,12 @@ import { useRef, useState, useEffect } from "react";
 import { Box, Grid, Button, TextField, Menu, MenuItem } from "@mui/material";
 import "./Navbar.css"
 
-
 import { getDatabase, ref, get, set, child, connectDatabaseEmulator } from "firebase/database";
 
-function Navbar() {
-    let buttonText = ["Width", "Height", "Current Panel", "Save", "Add"];
-
-    function navButton(text) {
-        return <Button 
-
-            className="item"
-            sx={{
-                borderRadius: 0
-            }}
-        >
-            {text}
-        </Button>
-    }
+function Navbar({ data, panelIndex, callbacks }) {
+    let handlePanelIndex = callbacks.handlePanelIndex
+    let saveData = callbacks.saveData
+    let addSlide = callbacks.addSlide
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -30,20 +19,25 @@ function Navbar() {
     };
 
     return (
-        
         <div className="Navbar">
             <div className="container">
                 <div className="item">
-                    <TextField label="Width"></TextField>
+                    <TextField label="Width" value={data.width} disabled/>
                 </div>
                 <div className="item">
-                    <TextField label="Height"></TextField>
+                    <TextField label="Height" value={data.height} disabled/>
                 </div>
                 <div className="item">
-                    <TextField label="Panel Index"></TextField>
+                    <TextField 
+                        label="Panel Index"
+                        value={panelIndex}
+                        onChange={(e) => handlePanelIndex(e.target.value)}
+                    />
                 </div>
 
-                {navButton("Save")}
+                <Button className="item" onClick={saveData}>
+                    Save
+                </Button>
 
                 <Button className="item"
                     aria-controls={open ? 'basic-menu' : undefined}
@@ -62,11 +56,11 @@ function Navbar() {
                     'aria-labelledby': 'basic-button',
                     }}
                 >
-                    <MenuItem onClick={handleClose}>Text</MenuItem>
-                    <MenuItem onClick={handleClose}>Image</MenuItem>
-                    <MenuItem onClick={handleClose}>Canvas</MenuItem>
-                    <MenuItem onClick={handleClose}>Poll</MenuItem>
-                    <MenuItem onClick={handleClose}>Results</MenuItem>
+                    <MenuItem onClick={() => {addSlide("text"); setAnchorEl(null);}}>Text</MenuItem>
+                    <MenuItem onClick={() => {addSlide("image"); setAnchorEl(null);}}>Image</MenuItem>
+                    <MenuItem onClick={() => {addSlide("canvas"); setAnchorEl(null);}}>Canvas</MenuItem>
+                    <MenuItem onClick={() => {addSlide("poll"); setAnchorEl(null);}}>Poll</MenuItem>
+                    <MenuItem onClick={() => {addSlide("poll_results"); setAnchorEl(null);}}>Results</MenuItem>
                 </Menu>
 
 

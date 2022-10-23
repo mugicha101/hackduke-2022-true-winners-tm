@@ -2,7 +2,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import { useRef, useState, useEffect } from 'react';
 
 function PollSlide({slideData={}, data={}}) {
-    let question = data.question;
+    let question = slideData.question;
     let poll_options = slideData.poll_options;
 
     return (
@@ -15,7 +15,7 @@ function PollSlide({slideData={}, data={}}) {
                 align="center"
                 sx={{
                     fontSize: "5vh",
-                    width: "100%"
+                    width: "100%",
                 }}
             >
                 {question}

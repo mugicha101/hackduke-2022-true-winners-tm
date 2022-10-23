@@ -4,13 +4,18 @@ import { getDatabase, ref, get, onValue, child, connectDatabaseEmulator } from "
 import { PieChart } from 'react-minimal-pie-chart';
 
 function ResultSlide({slideData={}, data={}}) {
-    let panel = slideData.p_id;
-    let slide = slideData.sl_id;
+    let panel = parseInt(slideData.p_id);
+    let slide = parseInt(slideData.sl_id);
 
-    let pollData = data.panels[panel].slides[slide];
+    
+    let pollData;
 
-    if (pollData == null) {
-        return <></>
+    if (!(panel < 0 || panel > data.panels.length || data.panels[panel] == null || data.panels[panel].slides[slide] == null)) {
+        pollData = data.panels[panel].slides[slide];
+    }
+
+    if (pollData == null || pollData.type !== "poll") {
+        return <p style={{textAlign: "center"}}>No poll exists at this location</p>
     }
 
     let poll_options = pollData.poll_options;

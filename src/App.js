@@ -4,7 +4,7 @@ import { Routes, Route, useParams } from 'react-router-dom';
 
 import Presentation from './components/presentation/Presentation';
 import Canvas from './components/Canvas';
-import Poll from './components/Poll';
+import Poll from './components/poll/Poll';
 import Edit from './components/edit/Edit';
 import Navbar from './components/navbar/Navbar'
 
@@ -14,11 +14,11 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 
-function ProfilePage() {
+function PollPage() {
   let { panel } = useParams();
   let { slide } = useParams();
 
-  return <Poll panel={panel} slide={slide}/>
+  return <Poll panel={panel} slide={parseInt(slide)-1}/>
 }
 
 function App() {
@@ -28,9 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Presentation />}/>
           <Route path="/edit" element={<Edit />}/>
-          <Route path="/heisenberg" element={<Canvas />}/>
-          <Route path="/poll/:panel/:slide" element={<ProfilePage/>} />
-          <Route path="/coe" element={<Navbar />}/>
+          <Route path="/poll/:panel/:slide" element={<PollPage/>} />
         </Routes>
       </div>
     </div>

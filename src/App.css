@@ -3,7 +3,8 @@
     align-items: center;
     justify-content: center;
     flex: 100%;
-    background-color: black;
+    background: linear-gradient(rgb(0, 139, 19), #002c00);
+    overflow: hidden;
 }
 
 .center {
@@ -12,4 +13,8 @@
     justify-content: center;
     width: fit-content;
     background-color: white;
+}
+
+.edit {
+    background: linear-gradient(rgb(0, 139, 19), #002c00);
 }

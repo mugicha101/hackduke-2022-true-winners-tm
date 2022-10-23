@@ -10,10 +10,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-function Slide({slideData, data, index, callbacks}) {
+function Slide({slideData, data, index, selected, callbacks}) {
     let type = slideData.type;
     
     let shiftSlide = callbacks.shiftSlide
+    let handleSelected = callbacks.handleSelected
 
     let slide;
     switch (type) {
@@ -40,12 +41,14 @@ function Slide({slideData, data, index, callbacks}) {
             display: "flex",
             alignItems: "flex-start",
             height: "50vh",
-            borderStyle: "solid"
+            borderStyle: "solid",
+            borderColor: selected === index ? "#BD2D87" : "black",
+            borderWidth: selected === index ? "3px" : "3px"
         }}>
             <Box sx={{
                 width: "89vh", 
                 height: "100%",
-                borderStyle: "none solid none none"
+                borderStyle: "none solid none none",
             }}>
                 {slide}       
             </Box>
@@ -63,7 +66,7 @@ function Slide({slideData, data, index, callbacks}) {
                 </Box>
                 <Divider color="black"/>
                 <Box sx={{flexGrow: 1}}/>
-                <Button variant="contained" sx={{
+                <Button variant="contained" onClick={() => handleSelected(index)} sx={{
                     borderRadius: 0
                 }}>
                     <EditIcon/>

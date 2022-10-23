@@ -83,7 +83,7 @@ function Presentation() {
                                         disabled={indexes[key] == 0}
                                         sx={{
                                             borderRadius: 0, 
-                                            height: "100%"
+                                            height: "80%"
                                         }}
                                         onClick={(e) => changeSlide(key, -1, numSlides)}
                                     >
@@ -97,7 +97,7 @@ function Presentation() {
                                         disabled={indexes[key] == numSlides - 1}
                                         sx={{
                                             borderRadius: 0, 
-                                            height: "100%"
+                                            height: "80%"
                                         }}
                                         onClick={(e) => changeSlide(key, 1, numSlides)}
                                     >

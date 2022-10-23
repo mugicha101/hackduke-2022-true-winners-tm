@@ -11,10 +11,10 @@ function Poll({panel, slide}) {
 
     useEffect(() => {
         const getPanelData = async () => {
-            let db = await getDatabase();
-            let panelDataRef = await ref(db, "panel_data");
+            let db = getDatabase();
+            let panelDataRef = ref(db, "panel_data");
             let snap = await get(panelDataRef);
-            let data = await snap.val();
+            let data = snap.val();
 
             let currPanel = data.panels[panel];
             let currSlide = currPanel.slides[slide];

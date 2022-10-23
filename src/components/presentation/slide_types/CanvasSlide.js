@@ -2,15 +2,13 @@ import CanvasDraw from '@win11react/react-canvas-draw';
 import { useRef, useState, useEffect } from 'react';
 import { Button, Box, Grid } from "@mui/material";
 
-function CanvasSlide({panelIndex, slideIndex, data={}, canvases={}, canvasRefs={}}) {
+function CanvasSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
     const ref = useRef(null);
     const [height, setHeight] = useState(0);
     const [width, setWidth] = useState(0);
 
-    let id = `${panelIndex},${slideIndex}`;
-    let canvas = canvases[id];
-    let canvasRef = canvasRefs[id].current;
-    console.log(canvasRef);
+    const canvas = useRef();
+    canvasRefs[panelIndex] = canvas;
 
     useEffect(() => {
       setHeight(ref.current.offsetHeight);
@@ -33,7 +31,14 @@ function CanvasSlide({panelIndex, slideIndex, data={}, canvases={}, canvasRefs={
           justifyContent: "space-between"
         }}
       >
-        {canvases[id]}
+        <CanvasDraw
+            ref={canvas}
+            canvasWidth={width}
+            canvasHeight={height}
+            hideGrid
+            immediateLoading
+            lazyRadius={0} brushRadius={2}
+        />
 
         <Grid container>
           <Grid item xs={4}>
@@ -53,7 +58,7 @@ function CanvasSlide({panelIndex, slideIndex, data={}, canvases={}, canvasRefs={
               fullWidth
               sx={{borderRadius: 0, height: "100%"}}
               onClick={() => {
-                if (canvasRef) canvasRef.undo();
+                canvas.current.undo();
               }}
             >
               Undo
@@ -65,7 +70,7 @@ function CanvasSlide({panelIndex, slideIndex, data={}, canvases={}, canvasRefs={
               fullWidth
               sx={{borderRadius: 0, height: "100%"}}
               onClick={() => {
-                if (canvasRef) canvasRef.eraseAll();
+                canvas.current.eraseAll();
               }}
             >
               Erase

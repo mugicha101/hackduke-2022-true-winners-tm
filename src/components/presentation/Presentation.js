@@ -12,9 +12,7 @@ import { getDatabase, ref, get, set, child, connectDatabaseEmulator } from "fire
 function Presentation() {
     const [data, setData] = useState(null);
     const [indexes, setIndexes] = useState([]);
-    const [saveData, setSaveData] = useState({});
-    const [canvases, setCanvases] = useState({});
-    const [canvasRefs, setCanvasRefs] = useState({});
+    const canvasRefs = {}
 
     useEffect(() => {
         const getPanelData = async () => {
@@ -24,30 +22,7 @@ function Presentation() {
             let data = snap.val();
 
             setData(data)
-            setIndexes(new Array(data.width * data.height).fill(0))
-            
-            let c = {};
-            let cr = {};
-            for (let panel_id in data.panels) {
-                let panel = data.panels[panel_id];
-                for (let slide_id in panel.slides) {
-                    let slide = panel.slides[slide_id];
-                    if (slide.type == "canvas") {
-                        let id = `${panel_id},${slide_id}`;
-                        cr[id] = React.createRef();
-                        c[id] = <CanvasDraw
-                            ref={cr[id]}
-                            canvasWidth="500px"
-                            canvasHeight="500px"
-                            hideGrid
-                            immediateLoading
-                            lazyRadius={0} brushRadius={2}
-                        />
-                    }
-                }
-            }
-            setCanvases(c);
-            setCanvasRefs(cr);
+            setIndexes(new Array(data.width * data.height).fill(0));
         }
 
         getPanelData()
@@ -55,17 +30,8 @@ function Presentation() {
 
     function changeSlide(panel, diff, numSlides) {
         let currIndex = indexes[panel];
-        let id = `${panel},${indexes[panel]}`;
-        console.log(id, canvasRefs[id]);
-        if (canvasRefs[id] && canvasRefs[id].current) {
-            console.log(canvasRefs[id].current);
-            // save canvas
-            let saveDataCopy = Object.assign({}, saveData);
-            console.log("SDC", saveDataCopy);
-            saveDataCopy[id] = canvasRefs[id].current.getSaveData();
-            setSaveData(saveDataCopy);
-            console.log(`SAVE SAVE DATA ${id}`);
-            canvasRefs[id].current.eraseAll();
+        if (canvasRefs[panel] && canvasRefs[panel].current) {
+            canvasRefs[panel].current.eraseAll();
         }
         
         if (currIndex + diff >= 0 && currIndex + diff < numSlides) {
@@ -107,7 +73,7 @@ function Presentation() {
                                 width: "100%",
                                 overflow: "clip",
                             }}>
-                                <Slide panelIndex={key} slideIndex={indexes[key]} type={slide.type} data={slide} saveData={saveData} canvases={canvases} canvasRefs={canvasRefs}/>
+                                <Slide panelIndex={key} slideIndex={indexes[key]} type={slide.type} data={slide} canvasRefs={canvasRefs}/>
                             </Box>
                             <Grid container sx={{height: "10%", width: "100%"}}>
                                 <Grid item xs={6}>

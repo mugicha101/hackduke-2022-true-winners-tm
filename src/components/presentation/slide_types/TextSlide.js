@@ -1,19 +1,26 @@
 import { Typography } from "@mui/material"
+import { useRef, useState, useEffect } from 'react';
 
-function TextSlide({data={}}) {
+function TextSlide({panelIndex, slideIndex, data={}, canvases={}, canvasRefs={}}) {
     let textBoxes = data.text_boxes
-    let one = textBoxes[0]
 
-    return <Typography
-        sx={{
-            position: "relative",
-            left: `${100 * one.x}%`,
-            top: `${100 * one.y}%`,
-            maxWidth: `${100 * one.width}%`
-        }}
-    >
-        {one.text}
-    </Typography>
+    return [...Object.keys(textBoxes)].map((key) => {
+        let box = textBoxes[key]
+        return <Typography
+            sx={{
+                position: "relative",
+                left: `${100 * box.x}%`,
+                top: `${100 * box.y}%`,
+                maxWidth: `${100 * box.width}%`
+            }}
+            key={key}
+        >
+            {box.text}
+        </Typography>
+    })
+    
+    
+    
 }
 
 export default TextSlide;

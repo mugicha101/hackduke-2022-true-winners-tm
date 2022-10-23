@@ -41,18 +41,7 @@ function CanvasSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
         />
 
         <Grid container>
-          <Grid item xs={4}>
-            <Button 
-              variant="outlined"
-              fullWidth
-              sx={{borderRadius: 0, height: "100%"}}
-              onClick={() => {
-                // console.log(canvas.current.getSaveData());
-              }}>
-                Save
-            </Button>
-          </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Button 
               variant="outlined"
               fullWidth
@@ -64,7 +53,7 @@ function CanvasSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
               Undo
             </Button>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Button 
               variant="outlined"
               fullWidth

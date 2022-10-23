@@ -1,9 +1,9 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { useRef, useState, useEffect } from 'react';
 
-function PollSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
+function PollSlide({slideData={}, data={}}) {
     let question = data.question;
-    let poll_options = data.poll_options;
+    let poll_options = slideData.poll_options;
 
     return (
         <Box sx={{

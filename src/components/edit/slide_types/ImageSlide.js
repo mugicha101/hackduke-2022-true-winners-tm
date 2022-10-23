@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
 
-function ImageSlide({ panelIndex, slideIndex, data={}, canvasRefs={}}) {
+function ImageSlide({slideData={}, data={}}) {
     return <img 
         width="100%" 
         height="100%" 
-        src={data.img_url ?? ""}
+        src={slideData.img_url ?? ""}
         style={{objectFit: "contain"}}
     />
 }

@@ -6,6 +6,7 @@ import Presentation from './components/presentation/Presentation';
 import Canvas from './components/Canvas';
 import Poll from './components/Poll';
 import Edit from './components/edit/Edit';
+import Navbar from './components/navbar/Navbar'
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -29,6 +30,7 @@ function App() {
           <Route path="/edit" element={<Edit />}/>
           <Route path="/heisenberg" element={<Canvas />}/>
           <Route path="/poll/:panel/:slide" element={<ProfilePage/>} />
+          <Route path="/coe" element={<Navbar />}/>
         </Routes>
       </div>
     </div>

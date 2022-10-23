@@ -1,57 +1,76 @@
 import { useRef, useState, useEffect } from "react";
-import { Box, Grid, Button } from "@mui/material";
-import './Poll.css';
+import { Box, Grid, Button, TextField, Menu, MenuItem } from "@mui/material";
+import "./Navbar.css"
+
 
 import { getDatabase, ref, get, set, child, connectDatabaseEmulator } from "firebase/database";
 
 function Navbar() {
-    const [type, setType] = useState("");
-    const [data, setData] = useState({});
-    const [picked, setPicked] = useState(false);
+    let buttonText = ["Width", "Height", "Current Panel", "Save", "Add"];
 
-    useEffect(() => {
-        const getPanelData = async () => {
-            let db = await getDatabase();
-            let panelDataRef = await ref(db, "panel_data");
-            let snap = await get(panelDataRef);
-            let data = await snap.val();
+    function navButton(text) {
+        return <Button 
 
-            let currPanel = data.panels[panel];
-            let currSlide = currPanel.slides[slide];
+            className="item"
+            sx={{
+                borderRadius: 0
+            }}
+        >
+            {text}
+        </Button>
+    }
 
-            setType(currSlide.type);
-            setData(currSlide);
-    
-            // console.log("type " + type + " poll " + poll);
-
-        }
-
-        getPanelData()
-    }, [])
-
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
     return (
-        // <div className="Poll">
-        //     <h2 style={{textAlign: "center"}}>{data.question}</h2>
-        //     <Grid container>
-        //         {
-        //             [...Object.keys(data.poll_options)].map((key) => {
-        //                 let poll_options = data.poll_options[key]
-        //                 return <Grid item xs={12} key={key}>
-        //                     <Button fullWidth onClick={() => addVote(key)}>{poll_options.text}</Button>
-        //                 </Grid>
-        //             })
-        //         }
-        //     </Grid>
-        // </div>
-        <div styles={{width:"100vw"}}>
-            <Grid container>
-                <Button>Width</Button>
-                <Button>Height</Button>
-                <Button>Current Panel</Button>
-                <Button>Save</Button>
-                <Button>Add</Button>
-            </Grid>
+        
+        <div className="Navbar">
+            <div className="container">
+                <div className="item">
+                    <TextField label="Width"></TextField>
+                </div>
+                <div className="item">
+                    <TextField label="Height"></TextField>
+                </div>
+                <div className="item">
+                    <TextField label="Panel Index"></TextField>
+                </div>
+
+                {navButton("Save")}
+
+                <Button className="item"
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                >
+                    Add
+                </Button>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    <MenuItem onClick={handleClose}>Text</MenuItem>
+                    <MenuItem onClick={handleClose}>Image</MenuItem>
+                    <MenuItem onClick={handleClose}>Canvas</MenuItem>
+                    <MenuItem onClick={handleClose}>Poll</MenuItem>
+                    <MenuItem onClick={handleClose}>Results</MenuItem>
+                </Menu>
+
+
+            </div>
         </div>
     )
 }

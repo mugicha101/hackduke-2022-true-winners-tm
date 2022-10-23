@@ -3,21 +3,11 @@ import { Box, Divider, Typography } from "@mui/material";
 import { getDatabase, ref, get, onValue, child, connectDatabaseEmulator } from "firebase/database";
 import { PieChart } from 'react-minimal-pie-chart';
 
-function ResultSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
-    const [pollData, setPollData] = useState(null);
+function ResultSlide({slideData={}, data={}}) {
+    let panel = slideData.p_id;
+    let slide = slideData.sl_id;
 
-    let panel = data.p_id;
-    let slide = data.sl_id;
-    
-    useEffect(() => {
-        let db = getDatabase();
-        let pollDataRef = ref(db, `panel_data/panels/${panel}/slides/${slide}`);
-        let detach = onValue(pollDataRef, (snap) => {
-            setPollData(snap.val());
-        })
-
-        return () => detach()
-    }, [panelIndex, slideIndex])
+    let pollData = data.panels[panel].slides[slide];
 
     if (pollData == null) {
         return <></>
@@ -60,23 +50,6 @@ function ResultSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
                 // viewport="10"
 
             />
-            
-            
-            { /*{
-                [...Object.keys(poll_options)].map((key) => {
-                    let votes = poll_options[key].votes;
-                    return <Typography 
-                        align="center"
-                        sx={{
-                            fontSize: "2.5vh",
-                            width: "100%"
-                        }}
-                        key={key}
-                    >
-                        {`${parseInt(key)+1}. ${votes}`}
-                    </Typography>
-                })
-            } */}
         </Box>
     )
 }

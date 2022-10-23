@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material"
 import { useRef, useState, useEffect } from 'react';
 
-function TextSlide({panelIndex, slideIndex, data={}, canvases={}, canvasRefs={}}) {
+function TextSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
     let textBoxes = data.text_boxes
 
     return [...Object.keys(textBoxes)].map((key) => {

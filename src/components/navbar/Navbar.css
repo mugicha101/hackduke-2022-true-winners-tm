@@ -1,0 +1,30 @@
+.Navbar {
+    background-color: white;
+    width: 100vw;
+    border-bottom: 2px solid lightblue;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+.container {
+    display: flex;
+}
+
+
+.item {
+    width: 15%;
+    padding-top:10px;
+    justify-content: center;
+    text-align: center;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+#basic-menu {
+    width: 100%;
+}
+
+.MuiButton-root {
+    border-radius: 0px;
+  } 

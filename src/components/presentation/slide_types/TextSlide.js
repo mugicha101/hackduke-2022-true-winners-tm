@@ -11,7 +11,8 @@ function TextSlide({panelIndex, slideIndex, data={}, canvasRefs={}}) {
                 position: "relative",
                 left: `${100 * box.x}%`,
                 top: `${100 * box.y}%`,
-                maxWidth: `${100 * box.width}%`
+                width: `${100 * box.width}%`,
+                fontSize: "2.5vh"
             }}
             key={key}
         >

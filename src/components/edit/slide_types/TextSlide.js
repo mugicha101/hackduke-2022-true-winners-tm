@@ -27,7 +27,6 @@ function TextSlide({slideData={}, data={}}) {
     }, []);
 
     let textBoxes = slideData.text_boxes;
-    console.log(textBoxes);
 
     let moveData = {};
     for (let key in Object.keys(textBoxes)) {
